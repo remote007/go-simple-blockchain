@@ -16,8 +16,15 @@ type BookCheckout struct{
 }
 
 type Book struct{
-	
+
 }
+
+type Blockchain struct{
+	blocks []*Block //Slice of multiple blocks
+
+}
+
+var Blockchain *Blockchain
 
 func main(){
 	r := mux.NewRouter()
