@@ -1,7 +1,8 @@
 package main
 
 import(
-	"fmt"
+	"log"
+	// "fmt"
 	"net/http"
  	"github.com/gorilla/mux"
 )
