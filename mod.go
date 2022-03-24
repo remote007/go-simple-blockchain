@@ -7,6 +7,18 @@ import(
  	"github.com/gorilla/mux"
 )
 
+type Block struct{
+
+}
+
+type BookCheckout struct{
+
+}
+
+type Book struct{
+	
+}
+
 func main(){
 	r := mux.NewRouter()
 	r.HandleFunc("/",getBlockchain).Methods("GET")
