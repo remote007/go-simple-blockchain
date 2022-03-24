@@ -16,7 +16,11 @@ type BookCheckout struct{
 }
 
 type Book struct{
-
+	ID string
+	Title string
+	Author string
+	PublishDate string
+	ISBN string
 }
 
 type Blockchain struct{
