@@ -2,10 +2,15 @@ package main
 
 import(
 	"log"
-	// "fmt"
+	"crypto/sha256"
+	"crypto/md5"
+	"encoding/hex"
 	"encoding/json"
 	"net/http"
  	"github.com/gorilla/mux"
+	"fmt"
+	"io"
+	"time"
 )
 
 type Block struct{
@@ -41,11 +46,23 @@ var Blockchain *Blockchain
 
 func newBook(w http.ResponseWriter , r *http.Request){
 	var book Book
-	if err := json.NewDecoder(r.body).Decode(&book); err!=nil{
-		w.writeHeader(http.StatusInternalServerError);
-		log.Printf("could not create")
+	// when not able to decode information
+	if err := json.NewDecoder(r.Body).Decode(&book); err!=nil{
+		w.WiteHeader(http.StatusInternalServerError);
+		log.Printf("could not create %v",err)
+		w.Write([]byte("could not create new book"))
+		return
 	}
 
+	h := md5.New()
+	io.WriteString(h, book.ISBN+book.PublishDate)
+	book.ID = fmt.Sprintf("%x",h.Sum(nil))
+	resp,err := json.MarshalIndent(book,""," ")
+	if err != nil{
+		w.writeHeader(http.StatusInternalServerError)
+		log.Printf("could not marshal payload : %v",err)
+		w.Write([]byte("could not save new book"))
+	}
 
 }
 
